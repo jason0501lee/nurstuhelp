@@ -4,6 +4,7 @@ import { useRecentsList } from '@/features/recents/hooks/useRecentsList';
 import { useFavoritesList } from '@/features/favorites/hooks/useFavoritesList';
 import { useCardsByIds } from '@/features/cards/hooks/useCardsByIds';
 import { DisclaimerBlock } from '@/features/safety/components/DisclaimerBlock';
+import { InstallPrompt } from '@/features/pwa/InstallPrompt';
 import { QuickActionRow } from './home/QuickActionRow';
 import { HorizontalCardScroller } from './home/HorizontalCardScroller';
 import { InterceptCounter } from './home/InterceptCounter';
@@ -59,6 +60,8 @@ export default function HomePage() {
       </Section>
 
       <InterceptCounter />
+
+      <InstallPrompt />
 
       <DisclaimerBlock kind="DISC-APP-FOOTER" className="mt-2" />
     </div>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="NurStuHelp">
+  <title>NurStuHelp</title>
+  <rect width="512" height="512" rx="96" fill="#0F766E"/>
+  <!-- Stylised cross + caduceus-light: a vertical bar with a horizontal stripe -->
+  <rect x="216" y="96" width="80" height="320" rx="24" fill="#ffffff"/>
+  <rect x="96" y="216" width="320" height="80" rx="24" fill="#ffffff"/>
+  <!-- Heart pulse line overlay -->
+  <path d="M96 256 L176 256 L208 200 L248 312 L280 256 L416 256"
+        fill="none"
+        stroke="#0F766E"
+        stroke-width="20"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>
