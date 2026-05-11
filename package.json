@@ -8,9 +8,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview --port 4173 --host",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "seed:generate": "tsx --tsconfig tsconfig.app.json scripts/generate-seed-sql.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.105.4",
     "clsx": "^2.1.1",
     "fuse.js": "^7.3.0",
     "idb-keyval": "^6.2.2",
@@ -27,6 +29,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
+    "tsx": "^4.21.0",
     "typescript": "^5.6.2",
     "vite": "^5.4.8",
     "vite-plugin-pwa": "^0.20.5",

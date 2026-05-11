@@ -1,10 +1,26 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ShieldCheck, BookOpen, Mail } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { SafetyBanner } from '@/features/safety/components/SafetyBanner';
-import { BUNDLE_VERSION } from '@/data/bundle';
+import { getCardRepository } from '@/repositories';
+import type { BundleVersion } from '@/repositories';
 
 export default function LearnPage() {
+  const [bundle, setBundle] = useState<BundleVersion | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void getCardRepository()
+      .bundleVersion()
+      .then((b) => {
+        if (!cancelled) setBundle(b);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <div className="p-4 space-y-4">
       <header className="space-y-1">
@@ -35,15 +51,15 @@ export default function LearnPage() {
             <dl className="mt-2 text-sm space-y-1">
               <div className="flex justify-between">
                 <dt className="text-text-muted">版本</dt>
-                <dd className="font-mono">v{BUNDLE_VERSION.version}</dd>
+                <dd className="font-mono">{bundle ? `v${bundle.version}` : '—'}</dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-text-muted">內容更新日</dt>
-                <dd className="font-mono">{BUNDLE_VERSION.updatedAt}</dd>
+                <dd className="font-mono">{bundle?.updatedAt ?? '—'}</dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-text-muted">卡片數量</dt>
-                <dd className="font-mono">{BUNDLE_VERSION.cardCount}</dd>
+                <dd className="font-mono">{bundle?.cardCount ?? '—'}</dd>
               </div>
             </dl>
           </div>

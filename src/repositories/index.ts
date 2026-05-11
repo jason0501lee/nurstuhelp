@@ -1,10 +1,16 @@
 /**
- * Repository factory. Pages should call these accessors rather than
- * instantiating implementations directly so we can swap backends in
- * one place later.
+ * Repository factory. The whole app talks to repositories through
+ * these accessors so we can swap backends in one place.
+ *
+ * Selection rule: when both VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
+ * are set at build time, SupabaseCardRepository (with IndexedDB
+ * offline cache) takes over. Otherwise the LocalCardRepository
+ * compiled-in bundle is used.
  */
+import { isSupabaseEnabled } from '@/lib/supabase';
 import type { CardRepository } from './CardRepository';
 import { LocalCardRepository } from './LocalCardRepository';
+import { SupabaseCardRepository } from './SupabaseCardRepository';
 import type { UserStateRepository } from './UserStateRepository';
 import { LocalUserStateRepository } from './LocalUserStateRepository';
 
@@ -12,7 +18,11 @@ let cardRepo: CardRepository | null = null;
 let userStateRepo: UserStateRepository | null = null;
 
 export function getCardRepository(): CardRepository {
-  if (!cardRepo) cardRepo = new LocalCardRepository();
+  if (!cardRepo) {
+    cardRepo = isSupabaseEnabled
+      ? new SupabaseCardRepository()
+      : new LocalCardRepository();
+  }
   return cardRepo;
 }
 

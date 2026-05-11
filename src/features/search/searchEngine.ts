@@ -1,21 +1,20 @@
 /**
- * Fuse.js-backed search engine.
+ * Fuse.js-backed search ranking.
  *
- * Built once per session from BUNDLE_CARDS. The LocalCardRepository
- * delegates to this engine so all search consumers (HomePage search
- * bar, /search page, future quick-pick) share one ranking model.
+ * The engine no longer owns the card list — it accepts whatever
+ * snapshot the calling Repository hands in. This lets both
+ * LocalCardRepository (bundled BUNDLE_CARDS) and
+ * SupabaseCardRepository (network or IndexedDB cache) share the same
+ * weighted ranking model.
  *
- * Field weights mirror FR-S05 from the spec: titles and type-specific
- * names are weighted highest, then search keywords / aliases, then
- * tags, then full-text body.
+ * Index is memoised on the card array reference so repeated searches
+ * over the same snapshot do not rebuild Fuse.
  */
 import Fuse, { type IFuseOptions } from 'fuse.js';
 import type { Card } from '@/types/card';
 import { isCardListable } from '@/types/card';
-import { BUNDLE_CARDS } from '@/data/bundle';
 import type { SearchHit, SearchOpts } from '@/repositories/CardRepository';
 
-/** Flat record optimised for Fuse — type-specific names get hoisted. */
 interface SearchableCard {
   id: string;
   card: Card;
@@ -27,7 +26,6 @@ interface SearchableCard {
   categories: string[];
   searchKeywords: string[];
   bodyText: string;
-  // Type-specific name boosts
   genericName?: string;
   brandNames?: string[];
   procedureName?: string;
@@ -112,55 +110,62 @@ const FUSE_OPTIONS: IFuseOptions<SearchableCard> = {
   ],
 };
 
-let fuseInstance: Fuse<SearchableCard> | null = null;
-let indexedSet: SearchableCard[] = [];
-
-function getFuse(): Fuse<SearchableCard> {
-  if (!fuseInstance) {
-    indexedSet = BUNDLE_CARDS.filter(isCardListable).map(toSearchable);
-    fuseInstance = new Fuse(indexedSet, FUSE_OPTIONS);
-  }
-  return fuseInstance;
+interface FuseCacheEntry {
+  cardsRef: readonly Card[];
+  fuse: Fuse<SearchableCard>;
+  searchables: SearchableCard[];
 }
 
-/** Forces a rebuild — useful after content updates in Settings. */
+let fuseCache: FuseCacheEntry | null = null;
+
+function getFuseFor(cards: readonly Card[]): FuseCacheEntry {
+  if (fuseCache && fuseCache.cardsRef === cards) return fuseCache;
+  const filtered = cards.filter(isCardListable);
+  const searchables = filtered.map(toSearchable);
+  fuseCache = {
+    cardsRef: cards,
+    fuse: new Fuse(searchables, FUSE_OPTIONS),
+    searchables,
+  };
+  return fuseCache;
+}
+
+/** Force the next call to rebuild the index — used after Settings → Refresh. */
 export function rebuildSearchIndex(): void {
-  fuseInstance = null;
-  indexedSet = [];
+  fuseCache = null;
 }
 
-export function runSearch(query: string, opts?: SearchOpts): SearchHit[] {
+export function runSearch(
+  cards: readonly Card[],
+  query: string,
+  opts?: SearchOpts,
+): SearchHit[] {
   const q = query.trim();
   if (!q) return [];
 
-  const fuse = getFuse();
+  const { fuse } = getFuseFor(cards);
   const results = fuse.search(q);
 
-  const filtered = results.filter((r) => {
-    const filter = opts?.filter;
-    if (!filter) return true;
-    const card = r.item.card;
-    if (filter.type) {
-      const wanted = Array.isArray(filter.type) ? filter.type : [filter.type];
-      if (!wanted.includes(card.type)) return false;
-    }
-    if (filter.clinicalSetting && !card.clinicalSetting.includes(filter.clinicalSetting)) {
-      return false;
-    }
-    if (filter.ageScope && !(card.ageScope?.includes(filter.ageScope))) {
-      return false;
-    }
-    if (filter.priority && card.priority !== filter.priority) {
-      return false;
-    }
-    if (filter.tag && !card.tags.includes(filter.tag)) {
-      return false;
-    }
-    if (filter.category && !card.categories.includes(filter.category)) {
-      return false;
-    }
-    return true;
-  });
+  const filter = opts?.filter;
+  const filtered = filter
+    ? results.filter((r) => {
+        const card = r.item.card;
+        if (filter.type) {
+          const wanted = Array.isArray(filter.type) ? filter.type : [filter.type];
+          if (!wanted.includes(card.type)) return false;
+        }
+        if (filter.clinicalSetting && !card.clinicalSetting.includes(filter.clinicalSetting)) {
+          return false;
+        }
+        if (filter.ageScope && !(card.ageScope?.includes(filter.ageScope))) {
+          return false;
+        }
+        if (filter.priority && card.priority !== filter.priority) return false;
+        if (filter.tag && !card.tags.includes(filter.tag)) return false;
+        if (filter.category && !card.categories.includes(filter.category)) return false;
+        return true;
+      })
+    : results;
 
   const limit = opts?.limit;
   const sliced = typeof limit === 'number' ? filtered.slice(0, limit) : filtered;

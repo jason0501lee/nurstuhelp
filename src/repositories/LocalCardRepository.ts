@@ -92,7 +92,9 @@ export class LocalCardRepository implements CardRepository {
   }
 
   async search(query: string, opts?: SearchOpts): Promise<SearchHit[]> {
-    return runSearch(query, opts);
+    // Snapshot filtered by status only; the engine handles the rest of the filter set.
+    const cards = BUNDLE_CARDS.filter(isCardListable);
+    return runSearch(cards, query, opts);
   }
 
   async bundleVersion(): Promise<BundleVersion> {

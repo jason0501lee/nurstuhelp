@@ -1,19 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Trash2, Info } from 'lucide-react';
+import { ChevronLeft, Trash2, Info, RefreshCw, Cloud, HardDrive } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Modal } from '@/components/ui/Modal';
-import { BUNDLE_VERSION } from '@/data/bundle';
-import { getUserStateRepository } from '@/repositories';
+import { getCardRepository, getUserStateRepository } from '@/repositories';
+import type { BundleVersion } from '@/repositories';
+import { getDataSourceInfo } from '@/lib/supabase';
+import { SupabaseCardRepository } from '@/repositories/SupabaseCardRepository';
 import { reloadFavorites } from '@/features/favorites/store';
 import { reloadRecents } from '@/features/recents/store';
 import { reloadIntercepts } from '@/features/intercepts/store';
+import { rebuildSearchIndex } from '@/features/search/searchEngine';
 import { setOnboardingAccepted } from '@/stores/useOnboardingStore';
 
 export default function SettingsPage() {
   const [confirmClear, setConfirmClear] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
+  const [bundle, setBundle] = useState<BundleVersion | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const dataSource = getDataSourceInfo();
+
+  useEffect(() => {
+    let cancelled = false;
+    void getCardRepository()
+      .bundleVersion()
+      .then((b) => {
+        if (!cancelled) setBundle(b);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleClearLocal = async () => {
     await getUserStateRepository().clearAll();
@@ -24,6 +42,20 @@ export default function SettingsPage() {
   const handleResetOnboarding = () => {
     setOnboardingAccepted(false);
     setConfirmReset(false);
+  };
+
+  const handleRefreshContent = async () => {
+    const repo = getCardRepository();
+    if (!(repo instanceof SupabaseCardRepository)) return;
+    setRefreshing(true);
+    try {
+      await repo.refresh();
+      rebuildSearchIndex();
+      const b = await repo.bundleVersion();
+      setBundle(b);
+    } finally {
+      setRefreshing(false);
+    }
   };
 
   return (
@@ -42,21 +74,63 @@ export default function SettingsPage() {
 
       <Card>
         <div className="flex items-start gap-2">
+          {dataSource.source === 'supabase' ? (
+            <Cloud className="size-5 text-info mt-0.5" aria-hidden />
+          ) : (
+            <HardDrive className="size-5 text-text-muted mt-0.5" aria-hidden />
+          )}
+          <div className="flex-1">
+            <h2 className="font-semibold">資料來源</h2>
+            <p className="text-sm text-text-muted mt-1">
+              {dataSource.source === 'supabase' ? (
+                <>
+                  Supabase（含 IndexedDB 離線快取）
+                  <span className="block font-mono text-xs break-all mt-0.5">
+                    {dataSource.url}
+                  </span>
+                </>
+              ) : (
+                <>內建內容包（未設定 Supabase 環境變數）</>
+              )}
+            </p>
+            {dataSource.source === 'supabase' && (
+              <div className="mt-3">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  disabled={refreshing}
+                  leadingIcon={
+                    <RefreshCw
+                      className={`size-4 ${refreshing ? 'animate-spin' : ''}`}
+                    />
+                  }
+                  onClick={handleRefreshContent}
+                >
+                  {refreshing ? '抓取中⋯' : '重新抓取內容'}
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <div className="flex items-start gap-2">
           <Info className="size-5 text-info mt-0.5" aria-hidden />
           <div className="flex-1">
             <h2 className="font-semibold">內容包資訊</h2>
             <dl className="mt-2 text-sm space-y-1">
               <div className="flex justify-between">
                 <dt className="text-text-muted">版本</dt>
-                <dd className="font-mono">v{BUNDLE_VERSION.version}</dd>
+                <dd className="font-mono">{bundle ? `v${bundle.version}` : '—'}</dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-text-muted">內容更新日</dt>
-                <dd className="font-mono">{BUNDLE_VERSION.updatedAt}</dd>
+                <dd className="font-mono">{bundle?.updatedAt ?? '—'}</dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-text-muted">卡片數量</dt>
-                <dd className="font-mono">{BUNDLE_VERSION.cardCount}</dd>
+                <dd className="font-mono">{bundle?.cardCount ?? '—'}</dd>
               </div>
             </dl>
           </div>
@@ -66,7 +140,7 @@ export default function SettingsPage() {
       <Card>
         <h2 className="font-semibold">本地紀錄</h2>
         <p className="text-sm text-text-muted mt-1">
-          所有資料皆儲存在裝置本地，不會上傳。包含：收藏 / 最近開啟 / 攔截紀錄。
+          所有使用紀錄皆儲存在裝置本地，不會上傳。包含：收藏 / 最近開啟 / 攔截紀錄。
         </p>
         <div className="mt-3">
           <Button
@@ -95,10 +169,7 @@ export default function SettingsPage() {
           若想重新閱讀啟用同意，可重置 onboarding。
         </p>
         <div className="mt-3">
-          <Button
-            variant="ghost"
-            onClick={() => setConfirmReset(true)}
-          >
+          <Button variant="ghost" onClick={() => setConfirmReset(true)}>
             重置 onboarding
           </Button>
         </div>
