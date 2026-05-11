@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { AppShell } from './app/AppShell';
+import { OnboardingGate } from './app/providers/OnboardingGate';
 import HomePage from './pages/HomePage';
 import SearchPage from './pages/SearchPage';
 import OnboardingPage from './pages/OnboardingPage';
@@ -16,7 +17,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <AppShell />,
+    element: (
+      <OnboardingGate>
+        <AppShell />
+      </OnboardingGate>
+    ),
     children: [
       { index: true, element: <HomePage /> },
       { path: 'search', element: <SearchPage /> },
