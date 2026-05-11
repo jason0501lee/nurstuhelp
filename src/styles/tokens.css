@@ -1,0 +1,32 @@
+/**
+ * Design tokens — clinical-friendly palette.
+ * RGB triplets (space-separated) so Tailwind <alpha-value> works.
+ */
+:root {
+  /* Brand */
+  --color-primary: 15 118 110;        /* teal-700 */
+  --color-primary-hover: 17 94 89;    /* teal-800 */
+  --color-primary-fg: 255 255 255;
+
+  /* Neutrals */
+  --color-surface: 255 255 255;
+  --color-bg: 248 250 252;            /* slate-50 */
+  --color-border: 226 232 240;        /* slate-200 */
+  --color-text: 15 23 42;             /* slate-900 */
+  --color-text-muted: 71 85 105;      /* slate-600 */
+
+  /* Semantic */
+  --color-info: 3 105 161;            /* sky-700 */
+  --color-info-soft: 224 242 254;     /* sky-100 */
+  --color-warn: 180 83 9;             /* amber-700 */
+  --color-warn-soft: 254 243 199;     /* amber-100 */
+  --color-critical: 185 28 28;        /* red-700 */
+  --color-critical-soft: 254 226 226; /* red-100 */
+  --color-success: 21 128 61;         /* green-700 */
+  --color-success-soft: 220 252 231;  /* green-100 */
+
+  /* Layout */
+  --radius-card: 12px;
+  --radius-btn: 8px;
+  --tap-min: 44px;
+}
