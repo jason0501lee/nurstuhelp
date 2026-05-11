@@ -111,4 +111,91 @@ export const DISEASE_CARDS: DiseaseCard[] = [
     patientEducationIds: ['edu-001'],
     relatedDrugIds: ['drug-001'],
   },
+
+  {
+    id: 'dis-002',
+    type: 'disease',
+    slug: 'type-2-diabetes',
+    locale: 'zh-TW',
+    title: '第 2 型糖尿病 (Type 2 DM)',
+    subtitle: 'T2DM · 慢性代謝疾病',
+    aliases: ['T2DM', '糖尿病', 'type 2 diabetes', 'diabetes mellitus'],
+    shortSummary: '長期高血糖造成多系統慢性傷害；血糖目標個別化，急性高低血糖為護理重點。',
+    targetUser: ['nursing_student'],
+    clinicalSetting: ['ward', 'opd', 'community'],
+    ageScope: ['adult', 'elderly'],
+    priority: 'high',
+    tags: ['endocrine', '常見疾病'],
+    categories: ['疾病/內分泌/糖尿病'],
+    caution: [
+      {
+        level: 'warning',
+        message: '本卡為學習用一般知識，不可作為個別病人之診斷或治療依據。',
+      },
+    ],
+    redFlags: [
+      {
+        trigger: '意識變化伴隨血糖 < 70 mg/dL 或 > 300 mg/dL',
+        actionHint: '考慮通報並依單位低血糖 / 高血糖緊急規範跟進。',
+      },
+    ],
+    bodySections: [
+      {
+        key: 'symptoms',
+        label: '常見表現',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: ['多尿、多渴、多食', '體重減輕', '疲倦、傷口癒合差', '視力模糊'],
+      },
+    ],
+    quickActions: [],
+    references: [
+      {
+        citation: '一般護理基礎教科書（範例條目）',
+        sourceType: 'textbook',
+        sourceLang: 'zh-TW',
+      },
+    ],
+    review: {
+      version: '1.0.0',
+      authoredBy: ['seed'],
+      reviewedBy: [],
+      nextReviewDue: '2027-01-01',
+      approvalScopes: ['clinical_accuracy'],
+    },
+    status: 'published',
+    createdAt: '2026-01-01T00:00:00Z',
+    updatedAt: '2026-04-01T00:00:00Z',
+    searchKeywords: ['T2DM', '糖尿病', 'diabetes'],
+
+    icd10: ['E11'],
+    oneLinerDefinition: '胰島素分泌與作用不足造成慢性高血糖的代謝疾病。',
+    pathophysiologyBrief:
+      '初期胰島素阻抗為主，β 細胞代償性增加分泌；長期下來分泌功能下降造成持續高血糖，長期影響微血管與大血管。',
+    typicalPresentation: ['多尿 / 多渴 / 多食', '體重減輕', '視力模糊', '傷口癒合不良'],
+    keyInvestigations: ['空腹血糖', 'HbA1c', 'OGTT', '尿微量白蛋白'],
+    treatmentOverview:
+      '治療概念包括生活型態介入（飲食、運動、體重）、口服降血糖藥（如 Metformin、SGLT2i、DPP-4i、GLP-1RA 等類別）以及胰島素治療。個別處方以主治醫師判斷為準。',
+    nursingPriorities: [
+      {
+        priority: 'critical',
+        point: '低血糖辨識與處置（依單位規範）',
+        rationale: '冒冷汗、心悸、意識變化等需立刻處置。',
+      },
+      {
+        priority: 'high',
+        point: '飲食、運動、用藥順從性衛教',
+      },
+      {
+        priority: 'high',
+        point: '足部照護與末梢循環評估',
+      },
+      {
+        priority: 'normal',
+        point: '長期目標：HbA1c、血壓、血脂個別化目標',
+      },
+    ],
+    complications: ['視網膜病變', '腎病變', '神經病變', '心血管事件', '足部潰瘍'],
+  },
 ];

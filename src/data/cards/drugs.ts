@@ -168,4 +168,128 @@ export const DRUG_CARDS: DrugCard[] = [
     storage: '室溫保存，避光。',
     appearance: '常見口服劑型為白色圓錠；注射劑為無色澄清溶液。',
   },
+
+  {
+    id: 'drug-002',
+    type: 'drug',
+    slug: 'acetaminophen',
+    locale: 'zh-TW',
+    title: 'Acetaminophen',
+    subtitle: '常見退燒 / 止痛',
+    aliases: ['Paracetamol', '普拿疼', 'Panadol', '乙醯胺酚', 'acetaminophen', 'paracetamol'],
+    shortSummary: '常用解熱鎮痛劑；劑量上限與肝功能風險為主要安全焦點。',
+    targetUser: ['nursing_student'],
+    clinicalSetting: ['ward', 'er', 'opd', 'pediatric', 'home'],
+    priority: 'high',
+    tags: ['解熱鎮痛', 'pediatric'],
+    categories: ['藥物/解熱鎮痛'],
+    caution: [
+      {
+        level: 'critical',
+        message: '本卡為學習與雙重核對用；劑量、頻次以最新醫囑為準。注意 24 小時總劑量上限與肝功能風險。',
+      },
+      {
+        level: 'warning',
+        scope: 'hepatic',
+        message: '肝功能不全者劑量需個別調整，與團隊確認。',
+      },
+    ],
+    redFlags: [
+      {
+        trigger: '24 小時內已使用其他含 acetaminophen 成分藥品',
+        actionHint: '考慮回報並重新評估總劑量，依單位規範跟進。',
+      },
+    ],
+    bodySections: [
+      {
+        key: 'indications',
+        label: '常見適應症',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: ['輕至中度疼痛', '發燒'],
+      },
+      {
+        key: 'nursing_focus',
+        label: '護理觀察重點',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: [
+          '觀察退燒成效（用藥後 30–60 分鐘）。',
+          '監測 24 小時總劑量，注意複方藥品中是否含相同成分。',
+          '長期 / 大量使用者注意 ALT/AST。',
+        ],
+      },
+    ],
+    quickActions: [],
+    references: [
+      {
+        citation: '常用藥物資料庫（範例條目）',
+        sourceType: 'drug_database',
+        sourceLang: 'zh-TW',
+      },
+    ],
+    review: {
+      version: '1.0.0',
+      authoredBy: ['seed'],
+      reviewedBy: [],
+      nextReviewDue: '2026-12-01',
+      approvalScopes: ['clinical_accuracy', 'safety_disclaimer'],
+    },
+    status: 'published',
+    createdAt: '2026-01-01T00:00:00Z',
+    updatedAt: '2026-04-01T00:00:00Z',
+    searchKeywords: ['普拿疼', 'acetaminophen', 'paracetamol', '退燒'],
+
+    genericName: 'Acetaminophen',
+    brandNames: ['Panadol', '普拿疼'],
+    drugClass: ['解熱鎮痛劑'],
+    highAlert: false,
+    indications: ['輕至中度疼痛', '發燒'],
+    contraindications: ['對成分過敏', '嚴重肝功能不全'],
+    routes: ['po', 'pr', 'iv'],
+    doseReference: [
+      {
+        population: '成人',
+        route: 'po',
+        rangeText: '500–1000 mg 每 4–6 小時，24h 總劑量不超過 4 g（多數指引建議 ≤ 3 g 較安全）。',
+        note: '僅供雙重核對；劑量以最新醫囑為準。',
+        sourceRefIdx: 0,
+      },
+      {
+        population: '兒童',
+        route: 'po',
+        rangeText: '10–15 mg/kg 每 4–6 小時，24h 不超過 5 劑。',
+        note: '兒科劑量請與處方對照。',
+        sourceRefIdx: 0,
+      },
+    ],
+    onsetPeakDuration: { onset: '30 分鐘', peak: '1 小時', duration: '4–6 小時' },
+    adverseEffects: {
+      common: ['一般耐受性佳'],
+      serious: ['過量導致肝毒性', '少見過敏反應'],
+    },
+    monitoring: [
+      {
+        parameter: '24 小時總劑量',
+        trigger: '使用複方藥品或多次給藥時',
+        actionHint: '與處方核對總劑量，避免無意中超量。',
+      },
+      {
+        parameter: 'ALT / AST',
+        trigger: '長期 / 大量使用',
+        actionHint: '依單位規範頻次抽血。',
+      },
+    ],
+    nursingConsiderations: [
+      '提醒病人勿同時自行使用含相同成分之感冒藥。',
+      '空腹或飯後皆可服用。',
+    ],
+    interactionsBrief: [
+      'Warfarin：長期使用可能增加 INR。',
+      '酒精：增加肝毒性風險。',
+    ],
+    appearance: '錠劑、糖漿、栓劑、IV 注射等多種劑型。',
+  },
 ];

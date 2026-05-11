@@ -224,4 +224,153 @@ export const VITAL_SIGN_CARDS: VitalSignCard[] = [
       '高熱兒童加強觀察活力、囪門、皮膚溫度與意識狀態變化。',
     ],
   },
+
+  {
+    id: 'vs-003',
+    type: 'vital_sign',
+    slug: 'respiratory-rate',
+    locale: 'zh-TW',
+    title: '呼吸次數 (RR) 正常範圍',
+    subtitle: 'Respiratory Rate',
+    aliases: ['RR', '呼吸', 'respiratory rate', '呼吸次數', 'breath rate'],
+    shortSummary: '依年齡的呼吸次數參考範圍；觀察呼吸型態與費力程度同樣重要。',
+    targetUser: ['nursing_student'],
+    clinicalSetting: ['ward', 'er', 'icu', 'pediatric'],
+    ageScope: ['neonate', 'infant', 'child', 'adolescent', 'adult', 'elderly'],
+    priority: 'high',
+    tags: ['生命徵象', 'respiratory'],
+    categories: ['生命徵象/呼吸'],
+    caution: [
+      {
+        level: 'info',
+        message: '呼吸次數加上呼吸型態（深淺、費力、輔助肌使用）一起判讀才完整。',
+      },
+    ],
+    bodySections: [
+      {
+        key: 'patterns',
+        label: '需要關注的呼吸型態',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'expanded',
+        content: [
+          '使用輔助肌、鼻翼搧動、胸骨上凹陷（兒童重要徵象）。',
+          '呼吸暫停、Cheyne-Stokes、Kussmaul 型態。',
+          '伴隨 SpO2 下降或意識變化 → 依規範回報。',
+        ],
+      },
+    ],
+    quickActions: [],
+    references: [
+      {
+        citation: '一般護理基礎教科書（範例條目）',
+        sourceType: 'textbook',
+        sourceLang: 'zh-TW',
+      },
+    ],
+    review: {
+      version: '1.0.0',
+      authoredBy: ['seed'],
+      reviewedBy: [],
+      nextReviewDue: '2027-01-01',
+      approvalScopes: ['clinical_accuracy'],
+    },
+    status: 'published',
+    createdAt: '2026-01-01T00:00:00Z',
+    updatedAt: '2026-04-01T00:00:00Z',
+    searchKeywords: ['RR', '呼吸次數', 'breath rate'],
+
+    parameter: 'rr',
+    unit: '次/分',
+    byAgeTable: [
+      { ageLabel: '新生兒', ageMinDays: 0, ageMaxDays: 28, normalMin: 30, normalMax: 60 },
+      { ageLabel: '嬰兒', ageMinDays: 29, ageMaxDays: 365, normalMin: 25, normalMax: 50 },
+      { ageLabel: '幼兒', ageMinDays: 366, ageMaxDays: 365 * 3, normalMin: 20, normalMax: 40 },
+      { ageLabel: '兒童', ageMinDays: 365 * 3 + 1, ageMaxDays: 365 * 12, normalMin: 18, normalMax: 30 },
+      { ageLabel: '青少年', ageMinDays: 365 * 12 + 1, ageMaxDays: 365 * 18, normalMin: 12, normalMax: 20 },
+      { ageLabel: '成人', ageMinDays: 365 * 18 + 1, ageMaxDays: 365 * 120, normalMin: 12, normalMax: 20 },
+    ],
+    criticalValues: {
+      low: 8,
+      high: 30,
+      note: '是否屬危急值與通報，請依各單位通報規範與臨床判斷。',
+    },
+    measurementTips: [
+      '量測時避免讓病人察覺，否則型態會改變；可在量脈搏時延伸觀察。',
+      '兒童因哭鬧 / 餵食而短暫升高，安撫後重測。',
+    ],
+  },
+
+  {
+    id: 'vs-004',
+    type: 'vital_sign',
+    slug: 'systolic-blood-pressure',
+    locale: 'zh-TW',
+    title: '收縮壓 (SBP) 參考範圍',
+    subtitle: 'Systolic Blood Pressure',
+    aliases: ['SBP', '收縮壓', 'systolic', 'BP'],
+    shortSummary: '成人與老年收縮壓參考範圍；高血壓與低血壓的閾值依指引與情境而異。',
+    targetUser: ['nursing_student'],
+    clinicalSetting: ['ward', 'opd', 'er', 'icu'],
+    ageScope: ['adult', 'elderly'],
+    priority: 'high',
+    tags: ['生命徵象', 'cardiovascular'],
+    categories: ['生命徵象/血壓'],
+    caution: [
+      {
+        level: 'info',
+        message: '單一測值不足以下結論；以多次趨勢與用藥前後比較較具臨床意義。',
+      },
+    ],
+    bodySections: [
+      {
+        key: 'cuff_size',
+        label: '量測注意',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'expanded',
+        content: [
+          '使用合適尺寸的壓脈帶；過小高估、過大低估。',
+          '坐姿、雙腳著地、休息 5 分鐘後再量；手臂位於心臟高度。',
+          '初次量測雙臂以利後續比較。',
+        ],
+      },
+    ],
+    quickActions: [],
+    references: [
+      {
+        citation: '一般護理基礎教科書（範例條目）',
+        sourceType: 'textbook',
+        sourceLang: 'zh-TW',
+      },
+    ],
+    review: {
+      version: '1.0.0',
+      authoredBy: ['seed'],
+      reviewedBy: [],
+      nextReviewDue: '2027-01-01',
+      approvalScopes: ['clinical_accuracy'],
+    },
+    status: 'published',
+    createdAt: '2026-01-01T00:00:00Z',
+    updatedAt: '2026-04-01T00:00:00Z',
+    searchKeywords: ['SBP', '血壓', 'blood pressure'],
+
+    parameter: 'sbp',
+    unit: 'mmHg',
+    byAgeTable: [
+      {
+        ageLabel: '成人（一般參考）',
+        ageMinDays: 365 * 18 + 1,
+        ageMaxDays: 365 * 120,
+        normalMin: 90,
+        normalMax: 130,
+      },
+    ],
+    criticalValues: {
+      low: 90,
+      high: 180,
+      note: '上述為一般參考；高 / 低血壓之臨床意義與通報依單位規範與臨床判斷。',
+    },
+  },
 ];
