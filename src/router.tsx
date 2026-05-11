@@ -11,6 +11,7 @@ import CardListPage from './pages/reference/CardListPage';
 import CardDetailPage from './pages/reference/CardDetailPage';
 import ToolsHomePage from './pages/tools/ToolsHomePage';
 import MedicationCheckPage from './pages/tools/MedicationCheckPage';
+import ISBARPage from './pages/tools/ISBARPage';
 import LearnPage from './pages/learn/LearnPage';
 
 export const router = createBrowserRouter([
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
 
       { path: 'tools', element: <ToolsHomePage /> },
       { path: 'tools/medcheck', element: <MedicationCheckPage /> },
+      { path: 'tools/isbar', element: <ISBARPage /> },
 
       { path: 'learn', element: <LearnPage /> },
       { path: 'favorites', element: <FavoritesPage /> },
