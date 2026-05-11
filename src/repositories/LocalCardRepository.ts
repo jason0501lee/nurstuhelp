@@ -1,9 +1,9 @@
 /**
  * In-memory CardRepository backed by the compiled-in mock bundle.
  *
- * Search here is intentionally naive (lowercased contains across the
- * indexable fields). Step 9 swaps the search() body for a Fuse.js
- * weighted index; the public surface stays identical.
+ * Search is delegated to features/search/searchEngine (Fuse.js), so
+ * every consumer — pages, the home search bar — uses the same
+ * weighted ranking model.
  */
 import {
   BUNDLE_CARDS,
@@ -11,6 +11,7 @@ import {
 } from '@/data/bundle';
 import type { Card, CardType } from '@/types/card';
 import { isCardListable } from '@/types/card';
+import { runSearch } from '@/features/search/searchEngine';
 import type {
   BundleVersion,
   CardFilter,
@@ -73,50 +74,6 @@ function matchesFilter(card: Card, filter?: CardFilter): boolean {
   );
 }
 
-function buildIndexHaystack(card: Card): { key: string; text: string }[] {
-  const list: { key: string; text: string }[] = [
-    { key: 'title', text: card.title.toLowerCase() },
-    { key: 'aliases', text: card.aliases.join(' ').toLowerCase() },
-    { key: 'shortSummary', text: card.shortSummary.toLowerCase() },
-    { key: 'tags', text: card.tags.join(' ').toLowerCase() },
-    { key: 'categories', text: card.categories.join(' ').toLowerCase() },
-  ];
-  if (card.subtitle) {
-    list.push({ key: 'subtitle', text: card.subtitle.toLowerCase() });
-  }
-  if (card.searchKeywords?.length) {
-    list.push({
-      key: 'searchKeywords',
-      text: card.searchKeywords.join(' ').toLowerCase(),
-    });
-  }
-  // Type-specific boosts: generic/brand names, procedure names, topic, etc.
-  switch (card.type) {
-    case 'drug':
-      list.push({
-        key: 'genericName',
-        text: card.genericName.toLowerCase(),
-      });
-      list.push({
-        key: 'brandNames',
-        text: card.brandNames.join(' ').toLowerCase(),
-      });
-      break;
-    case 'health_edu':
-      list.push({ key: 'topic', text: card.topic.toLowerCase() });
-      break;
-    case 'sop':
-      list.push({
-        key: 'procedureName',
-        text: card.procedureName.toLowerCase(),
-      });
-      break;
-    default:
-      break;
-  }
-  return list;
-}
-
 export class LocalCardRepository implements CardRepository {
   async list(filter?: CardFilter): Promise<Card[]> {
     return BUNDLE_CARDS.filter((c) => matchesFilter(c, filter)).filter(
@@ -135,32 +92,7 @@ export class LocalCardRepository implements CardRepository {
   }
 
   async search(query: string, opts?: SearchOpts): Promise<SearchHit[]> {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-
-    const candidates = await this.list(opts?.filter);
-    const hits: SearchHit[] = [];
-    for (const card of candidates) {
-      const fields = buildIndexHaystack(card);
-      let bestKey: string | undefined;
-      let bestScore = Infinity;
-      for (const { key, text } of fields) {
-        const idx = text.indexOf(q);
-        if (idx === -1) continue;
-        // Lower is better. Earlier match + shorter field == better score.
-        const score = idx / Math.max(text.length, 1);
-        if (score < bestScore) {
-          bestScore = score;
-          bestKey = key;
-        }
-      }
-      if (bestKey) {
-        hits.push({ card, score: bestScore, matchedKey: bestKey });
-      }
-    }
-
-    hits.sort((a, b) => a.score - b.score);
-    return typeof opts?.limit === 'number' ? hits.slice(0, opts.limit) : hits;
+    return runSearch(query, opts);
   }
 
   async bundleVersion(): Promise<BundleVersion> {
