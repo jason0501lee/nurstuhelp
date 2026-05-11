@@ -10,6 +10,7 @@ import ReferenceHomePage from './pages/reference/ReferenceHomePage';
 import CardListPage from './pages/reference/CardListPage';
 import CardDetailPage from './pages/reference/CardDetailPage';
 import ToolsHomePage from './pages/tools/ToolsHomePage';
+import MedicationCheckPage from './pages/tools/MedicationCheckPage';
 import LearnPage from './pages/learn/LearnPage';
 
 export const router = createBrowserRouter([
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
       { path: 'reference/:typeSlug/:slug', element: <CardDetailPage /> },
 
       { path: 'tools', element: <ToolsHomePage /> },
+      { path: 'tools/medcheck', element: <MedicationCheckPage /> },
 
       { path: 'learn', element: <LearnPage /> },
       { path: 'favorites', element: <FavoritesPage /> },
