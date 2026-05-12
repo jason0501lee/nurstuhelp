@@ -21,6 +21,7 @@ import { VitalSignBody } from '@/features/cards/components/typeSpecific/VitalSig
 import { DrugBody } from '@/features/cards/components/typeSpecific/DrugBody';
 import { DiseaseBody } from '@/features/cards/components/typeSpecific/DiseaseBody';
 import { HealthEduBody } from '@/features/cards/components/typeSpecific/HealthEduBody';
+import { AssessmentBody } from '@/features/cards/components/typeSpecific/AssessmentBody';
 import type { SafetyBannerKey, DiscKey } from '@/features/safety/copy';
 import { useCardsByIds } from '@/features/cards/hooks/useCardsByIds';
 
@@ -32,25 +33,48 @@ const SLUG_TO_TYPE: Record<string, CardType> = {
   sop: 'sop',
 };
 
-const BACK_PATH: Record<CardType, string> = {
-  vital_sign: '/reference/vital-signs',
-  drug: '/reference/drugs',
-  disease: '/reference/diseases',
-  health_edu: '/reference/health-edu',
-  sop: '/reference/sop',
-  isbar: '/tools',
-  med_safety: '/tools',
-};
+function backPathForCard(card: Card): string {
+  switch (card.type) {
+    case 'assessment':
+      return `/reference/assessment/${card.domain}`;
+    case 'vital_sign':
+      return '/reference/vital-signs';
+    case 'drug':
+      return '/reference/drugs';
+    case 'disease':
+      return '/reference/diseases';
+    case 'health_edu':
+      return '/reference/health-edu';
+    case 'sop':
+      return '/reference/sop';
+    default:
+      return '/reference';
+  }
+}
 
-const BACK_LABEL: Record<CardType, string> = {
-  vital_sign: '生命徵象',
-  drug: '藥物',
-  disease: '疾病',
-  health_edu: '衛教',
-  sop: 'SOP',
-  isbar: '工具',
-  med_safety: '工具',
-};
+function backLabelForCard(card: Card): string {
+  if (card.type === 'assessment') {
+    return card.domain === 'physical'
+      ? '身體評估'
+      : card.domain === 'psychological'
+        ? '心理評估'
+        : '社會評估';
+  }
+  switch (card.type) {
+    case 'vital_sign':
+      return '生命徵象';
+    case 'drug':
+      return '藥物';
+    case 'disease':
+      return '疾病';
+    case 'health_edu':
+      return '衛教';
+    case 'sop':
+      return 'SOP';
+    default:
+      return '快查';
+  }
+}
 
 /** Type → primary safety banner key shown at the top of the page. */
 function bannerKeyFor(card: Card): SafetyBannerKey | DiscKey | null {
@@ -63,6 +87,8 @@ function bannerKeyFor(card: Card): SafetyBannerKey | DiscKey | null {
       return 'SB-8';
     case 'health_edu':
       return 'DISC-EDU';
+    case 'assessment':
+      return 'DISC-CARD-BASE';
     default:
       return null;
   }
@@ -72,6 +98,8 @@ function TypeSpecificBody({ card }: { card: Card }) {
   switch (card.type) {
     case 'vital_sign':
       return <VitalSignBody card={card} />;
+    case 'assessment':
+      return <AssessmentBody card={card} />;
     case 'drug':
       return <DrugBody card={card} />;
     case 'disease':
@@ -84,8 +112,15 @@ function TypeSpecificBody({ card }: { card: Card }) {
 }
 
 export default function CardDetailPage() {
-  const { typeSlug, slug } = useParams();
-  const cardType = typeSlug ? SLUG_TO_TYPE[typeSlug] : undefined;
+  const params = useParams();
+  // Assessment URL: /reference/assessment/:domain/:slug → params.domain + params.slug
+  // Other types:    /reference/:typeSlug/:slug          → params.typeSlug + params.slug
+  const slug = params.slug;
+  const cardType: CardType | undefined = params.domain
+    ? 'assessment'
+    : params.typeSlug
+      ? SLUG_TO_TYPE[params.typeSlug]
+      : undefined;
   const [card, setCard] = useState<Card | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -135,11 +170,11 @@ export default function CardDetailPage() {
   return (
     <article className="p-4 space-y-4">
       <Link
-        to={BACK_PATH[card.type]}
+        to={backPathForCard(card)}
         className="inline -ml-2 inline-flex items-center gap-1 text-sm text-text-muted hover:text-text"
       >
         <ChevronLeft className="size-4" />
-        <span>{BACK_LABEL[card.type]}</span>
+        <span>{backLabelForCard(card)}</span>
       </Link>
 
       <CardHeader card={card} />

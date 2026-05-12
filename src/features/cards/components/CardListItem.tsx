@@ -4,15 +4,32 @@ import type { Card } from '@/types/card';
 import { FavoriteButton } from '@/features/favorites/components/FavoriteButton';
 import { PriorityBadge } from './PriorityBadge';
 
-const TYPE_PATH: Record<Card['type'], string> = {
-  vital_sign: '/reference/vital-signs',
-  drug: '/reference/drugs',
-  disease: '/reference/diseases',
-  health_edu: '/reference/health-edu',
-  sop: '/reference/sop',
-  isbar: '/tools/isbar',
-  med_safety: '/tools/medcheck',
-};
+/**
+ * Resolve the navigation path for a Card. Most types use a flat
+ * /reference/{slug-or-folder}/{slug} pattern; the `assessment` type
+ * adds a domain segment so URL structure mirrors the UI grouping
+ * under 基本評估.
+ */
+export function pathForCard(card: Card): string {
+  switch (card.type) {
+    case 'assessment':
+      return `/reference/assessment/${card.domain}/${card.slug}`;
+    case 'vital_sign':
+      return `/reference/vital-signs/${card.slug}`;
+    case 'drug':
+      return `/reference/drugs/${card.slug}`;
+    case 'disease':
+      return `/reference/diseases/${card.slug}`;
+    case 'health_edu':
+      return `/reference/health-edu/${card.slug}`;
+    case 'sop':
+      return `/reference/sop/${card.slug}`;
+    case 'isbar':
+      return `/tools/isbar`;
+    case 'med_safety':
+      return `/tools/medcheck`;
+  }
+}
 
 interface CardListItemProps {
   card: Card;
@@ -26,13 +43,10 @@ interface CardListItemProps {
  * button uses stopPropagation so it stays a separate action.
  */
 export function CardListItem({ card, to }: CardListItemProps) {
-  const path = to ?? `${TYPE_PATH[card.type]}/${card.slug}`;
+  const path = to ?? pathForCard(card);
   return (
     <li className="bg-surface rounded-card border border-border">
-      <Link
-        to={path}
-        className="flex items-center gap-3 p-4 group"
-      >
+      <Link to={path} className="flex items-center gap-3 p-4 group">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
             <PriorityBadge priority={card.priority} />

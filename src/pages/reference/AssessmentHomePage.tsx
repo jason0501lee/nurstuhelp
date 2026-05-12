@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
 import {
   HeartPulse,
-  Pill,
   Stethoscope,
-  BookOpen,
+  Brain,
+  Users,
+  ChevronLeft,
   ChevronRight,
   type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
-interface CategoryTile {
+interface AssessmentTile {
   to: string;
   label: string;
   description: string;
@@ -17,52 +18,63 @@ interface CategoryTile {
   tone: 'primary' | 'info' | 'warn' | 'neutral';
 }
 
-const TILES: CategoryTile[] = [
+const TILES: AssessmentTile[] = [
   {
-    to: '/reference/assessment',
-    label: '基本評估',
-    description: '生命徵象、身體、心理、社會評估',
+    to: '/reference/vital-signs',
+    label: '生命徵象',
+    description: '依年齡正常值與危急值參考',
     icon: HeartPulse,
     tone: 'primary',
   },
   {
-    to: '/reference/drugs',
-    label: '藥物',
-    description: '作用、副作用、護理觀察',
-    icon: Pill,
+    to: '/reference/assessment/physical',
+    label: '身體評估',
+    description: '頭到腳、系統性評估與書寫範例',
+    icon: Stethoscope,
     tone: 'info',
   },
   {
-    to: '/reference/diseases',
-    label: '疾病',
-    description: '一般知識與護理重點',
-    icon: Stethoscope,
+    to: '/reference/assessment/psychological',
+    label: '心理評估',
+    description: '情緒、認知、思考、自傷風險',
+    icon: Brain,
     tone: 'warn',
   },
   {
-    to: '/reference/health-edu',
-    label: '衛教',
-    description: '對病人講的口語腳本',
-    icon: BookOpen,
+    to: '/reference/assessment/social',
+    label: '社會評估',
+    description: '家庭、支持系統、出院規劃',
+    icon: Users,
     tone: 'neutral',
   },
 ];
 
-const TONE: Record<CategoryTile['tone'], string> = {
+const TONE: Record<AssessmentTile['tone'], string> = {
   primary: 'bg-primary/10 text-primary',
   info: 'bg-info-soft text-info',
   warn: 'bg-warn-soft text-warn',
   neutral: 'bg-bg text-text',
 };
 
-export default function ReferenceHomePage() {
+export default function AssessmentHomePage() {
   return (
     <div className="p-4 space-y-4">
+      <Link
+        to="/reference"
+        className="inline -ml-2 inline-flex items-center gap-1 text-sm text-text-muted hover:text-text"
+      >
+        <ChevronLeft className="size-4" />
+        <span>快查</span>
+      </Link>
+
       <header className="space-y-1">
         <p className="text-xs uppercase tracking-wider text-text-muted">
-          快查
+          基本評估
         </p>
-        <h1 className="text-2xl font-semibold">選擇分類</h1>
+        <h1 className="text-2xl font-semibold">選擇評估面向</h1>
+        <p className="text-sm text-text-muted">
+          護理評估三軸：生理、心理、社會。
+        </p>
       </header>
 
       <ul className="grid grid-cols-1 gap-2">

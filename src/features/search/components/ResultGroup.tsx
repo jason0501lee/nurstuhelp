@@ -3,6 +3,7 @@ import { CardListItem } from '@/features/cards/components/CardListItem';
 
 const TYPE_LABEL: Record<Card['type'], string> = {
   vital_sign: '生命徵象',
+  assessment: '基本評估',
   drug: '藥物',
   disease: '疾病',
   health_edu: '衛教',

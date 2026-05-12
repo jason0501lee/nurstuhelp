@@ -27,6 +27,7 @@ import type {
 } from './safety';
 
 import type { VitalSignCard } from './cards/vitalSign';
+import type { AssessmentCard } from './cards/assessment';
 import type { DrugCard } from './cards/drug';
 import type { DiseaseCard } from './cards/disease';
 import type { HealthEduCard } from './cards/healthEdu';
@@ -36,6 +37,7 @@ import type { SOPCard } from './cards/sop';
 
 export type CardType =
   | 'vital_sign'
+  | 'assessment'
   | 'disease'
   | 'drug'
   | 'health_edu'
@@ -102,6 +104,7 @@ export interface BaseCard {
  */
 export type Card =
   | VitalSignCard
+  | AssessmentCard
   | DiseaseCard
   | DrugCard
   | HealthEduCard

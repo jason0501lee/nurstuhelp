@@ -11,6 +11,7 @@ import type { Card } from '@/types/card';
 const GROUP_ORDER: Card['type'][] = [
   'drug',
   'vital_sign',
+  'assessment',
   'disease',
   'health_edu',
   'med_safety',

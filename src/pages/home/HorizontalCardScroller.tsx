@@ -3,19 +3,11 @@ import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import type { Card } from '@/types/card';
 import { PriorityBadge } from '@/features/cards/components/PriorityBadge';
-
-const TYPE_PATH: Record<Card['type'], string> = {
-  vital_sign: '/reference/vital-signs',
-  drug: '/reference/drugs',
-  disease: '/reference/diseases',
-  health_edu: '/reference/health-edu',
-  sop: '/reference/sop',
-  isbar: '/tools/isbar',
-  med_safety: '/tools/medcheck',
-};
+import { pathForCard } from '@/features/cards/components/CardListItem';
 
 const TYPE_LABEL: Record<Card['type'], string> = {
   vital_sign: '生命徵象',
+  assessment: '基本評估',
   drug: '藥物',
   disease: '疾病',
   health_edu: '衛教',
@@ -60,7 +52,7 @@ export function HorizontalCardScroller({
         {visible.map((c) => (
           <Link
             key={c.id}
-            to={`${TYPE_PATH[c.type]}/${c.slug}`}
+            to={pathForCard(c)}
             className="shrink-0 w-[14rem] rounded-card border border-border bg-surface p-3 flex flex-col gap-1.5 hover:bg-bg"
           >
             <div className="flex items-center gap-1.5">
