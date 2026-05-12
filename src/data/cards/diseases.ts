@@ -109,7 +109,7 @@ export const DISEASE_CARDS: DiseaseCard[] = [
     ],
     complications: ['冠心症', '心衰竭', '腦血管事件', '慢性腎臟病', '視網膜病變'],
     patientEducationIds: ['edu-001'],
-    relatedDrugIds: ['drug-001'],
+    relatedDrugIds: ['drug-furosemide', 'drug-amlodipine', 'drug-lisinopril', 'drug-hctz'],
   },
 
   {
@@ -197,5 +197,6 @@ export const DISEASE_CARDS: DiseaseCard[] = [
       },
     ],
     complications: ['視網膜病變', '腎病變', '神經病變', '心血管事件', '足部潰瘍'],
+    relatedDrugIds: ['drug-metformin', 'drug-glimepiride', 'drug-insulin'],
   },
 ];
