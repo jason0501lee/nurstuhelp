@@ -25,7 +25,7 @@ const ACTIONS: QuickAction[] = [
   { to: '/tools/medcheck', label: '三讀六對', icon: ClipboardCheck, tone: 'critical' },
   { to: '/tools/isbar', label: 'ISBAR', icon: MessageSquareText, tone: 'primary' },
   { to: '/reference/drugs', label: '藥物', icon: Pill, tone: 'neutral' },
-  { to: '/reference/vital-signs', label: '基本評估', icon: HeartPulse, tone: 'neutral' },
+  { to: '/reference/assessment', label: '基本評估', icon: Stethoscope, tone: 'neutral' },
 ];
 
 const TONE: Record<QuickAction['tone'], string> = {
