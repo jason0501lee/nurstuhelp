@@ -3,7 +3,7 @@ import {
   ClipboardCheck,
   MessageSquareText,
   Pill,
-  HeartPulse,
+  Stethoscope,
   type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/cn';
