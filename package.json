@@ -9,7 +9,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --port 4173 --host",
     "typecheck": "tsc -b --noEmit",
-    "seed:generate": "tsx --tsconfig tsconfig.app.json scripts/generate-seed-sql.ts"
+    "seed:generate": "tsx --tsconfig tsconfig.app.json scripts/generate-seed-sql.ts",
+    "push:supabase": "tsx --tsconfig tsconfig.app.json scripts/push-to-supabase.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.105.4",
