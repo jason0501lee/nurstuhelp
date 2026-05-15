@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ChevronLeft, Search } from 'lucide-react';
 import { CardListItem } from '@/features/cards/components/CardListItem';
@@ -20,7 +20,7 @@ const TYPE_TITLE: Record<CardType, string> = {
   drug: '藥物',
   disease: '疾病',
   health_edu: '衛教',
-  sop: 'SOP',
+  sop: '護理技術',
   isbar: 'ISBAR',
   med_safety: '安全核對',
 };

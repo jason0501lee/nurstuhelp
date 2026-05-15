@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import type { Card, CardType } from '@/types/card';
@@ -22,6 +22,7 @@ import { DrugBody } from '@/features/cards/components/typeSpecific/DrugBody';
 import { DiseaseBody } from '@/features/cards/components/typeSpecific/DiseaseBody';
 import { HealthEduBody } from '@/features/cards/components/typeSpecific/HealthEduBody';
 import { AssessmentBody } from '@/features/cards/components/typeSpecific/AssessmentBody';
+import { SOPBody } from '@/features/cards/components/typeSpecific/SOPBody';
 import type { SafetyBannerKey, DiscKey } from '@/features/safety/copy';
 import { useCardsByIds } from '@/features/cards/hooks/useCardsByIds';
 
@@ -70,13 +71,12 @@ function backLabelForCard(card: Card): string {
     case 'health_edu':
       return '衛教';
     case 'sop':
-      return 'SOP';
+      return '護理技術';
     default:
       return '快查';
   }
 }
 
-/** Type → primary safety banner key shown at the top of the page. */
 function bannerKeyFor(card: Card): SafetyBannerKey | DiscKey | null {
   switch (card.type) {
     case 'drug':
@@ -106,6 +106,8 @@ function TypeSpecificBody({ card }: { card: Card }) {
       return <DiseaseBody card={card} />;
     case 'health_edu':
       return <HealthEduBody card={card} />;
+    case 'sop':
+      return <SOPBody card={card} />;
     default:
       return null;
   }
@@ -113,8 +115,6 @@ function TypeSpecificBody({ card }: { card: Card }) {
 
 export default function CardDetailPage() {
   const params = useParams();
-  // Assessment URL: /reference/assessment/:domain/:slug → params.domain + params.slug
-  // Other types:    /reference/:typeSlug/:slug          → params.typeSlug + params.slug
   const slug = params.slug;
   const cardType: CardType | undefined = params.domain
     ? 'assessment'

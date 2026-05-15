@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import {
   HeartPulse,
   Pill,
   Stethoscope,
   BookOpen,
+  Syringe,
   ChevronRight,
   type LucideIcon,
 } from 'lucide-react';
@@ -45,6 +46,13 @@ const TILES: CategoryTile[] = [
     description: '對病人講的口語腳本',
     icon: BookOpen,
     tone: 'neutral',
+  },
+  {
+    to: '/reference/sop',
+    label: '護理技術',
+    description: '打針、導尿、換點滴、CPR',
+    icon: Syringe,
+    tone: 'primary',
   },
 ];
 

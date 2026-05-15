@@ -1,4 +1,4 @@
-/**
+﻿/**
  * The compiled-in content bundle.
  *
  * Each card type has its own seed file under `cards/`. This file is
@@ -17,6 +17,7 @@ import { DISEASE_CARDS } from './cards/diseases';
 import { HEALTH_EDU_CARDS } from './cards/health-edu';
 import { ISBAR_TEMPLATES } from './cards/isbar-templates';
 import { MED_CHECK_CARDS } from './cards/med-check';
+import { TECHNIQUE_CARDS } from './cards/techniques';
 
 export const BUNDLE_CARDS: Card[] = [
   ...VITAL_SIGN_CARDS,
@@ -26,10 +27,11 @@ export const BUNDLE_CARDS: Card[] = [
   ...HEALTH_EDU_CARDS,
   ...ISBAR_TEMPLATES,
   ...MED_CHECK_CARDS,
+  ...TECHNIQUE_CARDS,
 ];
 
 export const BUNDLE_VERSION: BundleVersion = {
-  version: '0.6.0',
-  updatedAt: '2026-05-11',
+  version: '0.7.0',
+  updatedAt: '2026-05-14',
   cardCount: BUNDLE_CARDS.length,
 };
