@@ -51,6 +51,31 @@ function decodeJwtRole(jwt: string): string | null {
   }
 }
 
+function assertSecretKey(key: string): void {
+  if (key.startsWith('sb_secret_')) return;
+  if (key.startsWith('sb_publishable_')) {
+    die(
+      'Refusing to push: this is a publishable key (sb_publishable_*).\n' +
+        '  Publishable keys cannot bypass RLS. Use a secret key (sb_secret_*) instead.',
+    );
+  }
+  const role = decodeJwtRole(key);
+  if (role === 'service_role') return;
+  if (role === 'anon') {
+    die(
+      'Refusing to push: this is the anon JWT (role="anon").\n' +
+        '  Use the service_role key (legacy) or a sb_secret_* key (new format).',
+    );
+  }
+  die(
+    `Refusing to push: key format not recognised.\n` +
+      `  Expected one of:\n` +
+      `    - new format: starts with "sb_secret_"\n` +
+      `    - legacy JWT with role="service_role"\n` +
+      `  Got role="${role ?? 'unknown'}".`,
+  );
+}
+
 function die(message: string): never {
   console.error(`\n✗ ${message}\n`);
   process.exit(1);
@@ -66,16 +91,12 @@ async function main(): Promise<void> {
   if (!serviceKey) {
     die(
       'SUPABASE_SERVICE_ROLE_KEY is not set (.env.local).\n' +
-        '  Get it: Supabase Dashboard -> Project Settings -> API -> service_role key.',
+        '  Get it: Supabase Dashboard -> Project Settings -> API Keys ->\n' +
+        '          either the legacy service_role JWT, or a new secret key (sb_secret_*).',
     );
   }
 
-  const role = decodeJwtRole(serviceKey);
-  if (role !== 'service_role') {
-    die(
-      `Refusing to push: SUPABASE_SERVICE_ROLE_KEY has role="${role ?? 'unknown'}", expected "service_role".`,
-    );
-  }
+  assertSecretKey(serviceKey);
 
   const client = createClient(url, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
