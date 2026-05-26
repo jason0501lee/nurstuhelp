@@ -31,7 +31,7 @@ export const BUNDLE_CARDS: Card[] = [
 ];
 
 export const BUNDLE_VERSION: BundleVersion = {
-  version: '0.7.0',
-  updatedAt: '2026-05-14',
+  version: '0.7.1',
+  updatedAt: '2026-05-26',
   cardCount: BUNDLE_CARDS.length,
 };

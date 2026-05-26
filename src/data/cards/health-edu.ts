@@ -429,4 +429,254 @@ export const HEALTH_EDU_CARDS: HealthEduCard[] = [
       ],
     },
   },
+
+  {
+    id: 'edu-004',
+    type: 'health_edu',
+    slug: 'dengue-fever-education',
+    locale: 'zh-TW',
+    title: '登革熱衛教',
+    subtitle: '居家照護、防蚊與重症警示（成人）',
+    aliases: ['登革熱', '斷骨熱', 'dengue', 'dengue fever'],
+    shortSummary:
+      '登革熱由病媒蚊（埃及斑蚊、白線斑蚊）傳染。多為自限性疾病，但退燒期最危險，需密切觀察出血與休克前徵象；居家以休息、補水、防蚊隔離為主。',
+    targetUser: ['nursing_student'],
+    clinicalSetting: ['ward', 'er', 'opd', 'community', 'home'],
+    ageScope: ['adult', 'elderly'],
+    priority: 'high',
+    tags: ['衛教', '傳染病', '病媒蚊', '夏季'],
+    categories: ['衛教/傳染病/登革熱'],
+    caution: [
+      {
+        level: 'critical',
+        message:
+          '退燒後 24–48 小時是進展為重症的高風險期，出現持續腹痛、反覆嘔吐、四肢冰冷、出血或意識改變請立即就醫。',
+      },
+      {
+        level: 'warning',
+        message:
+          '退燒止痛只可用 acetaminophen（普拿疼）。禁用 aspirin 與 NSAIDs（如 ibuprofen、diclofenac），會增加出血風險。',
+      },
+      {
+        level: 'warning',
+        message:
+          '發病前 1 天至發病後 5 天具傳染力，務必使用蚊帳並做好家中防蚊，避免病媒蚊再傳染家人或社區。',
+      },
+    ],
+    redFlags: [
+      {
+        trigger: '退燒後反而更不舒服、虛弱、頭暈',
+        actionHint: '可能進入重症期或血管滲漏期，立即就醫。',
+      },
+      {
+        trigger: '持續或劇烈腹痛、肚子緊繃',
+        actionHint: '懷疑血漿滲漏或內出血，立即急診。',
+      },
+      {
+        trigger: '反覆嘔吐、無法口服進食或喝水',
+        actionHint: '脫水與電解質失衡風險，立即就醫評估點滴補液。',
+      },
+      {
+        trigger: '四肢冰冷濕黏、臉色蒼白、冒冷汗',
+        actionHint: '休克前兆，立即打 119 或送急診。',
+      },
+      {
+        trigger: '嗜睡、意識不清、煩躁、行為改變',
+        actionHint: '可能腦部受影響或休克，立即送醫。',
+      },
+      {
+        trigger: '任何出血徵象（牙齦出血、流鼻血、皮膚瘀點瘀青、解黑便、咖啡色嘔吐物、月經量大增）',
+        actionHint: '懷疑出血性登革熱，立即急診評估血小板與凝血。',
+      },
+      {
+        trigger: '4–6 小時以上未排尿，或尿色變很深',
+        actionHint: '脫水或腎臟壓力，盡早就醫補液評估。',
+      },
+    ],
+    bodySections: [
+      {
+        key: 'overview',
+        label: '什麼是登革熱',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: [
+          '由登革病毒經病媒蚊（埃及斑蚊、白線斑蚊）叮咬傳染。',
+          '潛伏期約 3–14 天，多為 4–7 天。',
+          '典型症狀：突發高燒、頭痛、後眼窩痛、肌肉關節骨頭劇痛（俗稱「斷骨熱」）、噁心嘔吐、皮疹。',
+          '多為自限性疾病，約 7–14 天逐漸恢復；少數會進展為重症 / 出血登革熱。',
+          '目前無特效抗病毒藥，治療以支持性療法為主（補水、退燒、休息）。',
+        ],
+      },
+      {
+        key: 'home_care',
+        label: '居家照護重點',
+        layout: 'ordered_steps',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: [
+          {
+            index: 1,
+            text: '多休息、避免熬夜與勞累，臥床休息為主，避免劇烈活動與碰撞（降低出血與跌倒風險）。',
+          },
+          {
+            index: 2,
+            text: '少量多次補充水分與電解質：開水、運動飲料、清湯。觀察並紀錄每天的喝水量與尿量。',
+            why: '預防脫水與血液濃縮，協助維持循環血量。',
+          },
+          {
+            index: 3,
+            text: '飲食清淡易消化：稀飯、麵條、蔬菜水果為主，避免油膩與刺激性食物。',
+          },
+          {
+            index: 4,
+            text: '退燒止痛只能用 acetaminophen（普拿疼）。不可自行買成藥。',
+            warning: {
+              level: 'critical',
+              message:
+                '禁用 aspirin、ibuprofen、diclofenac 等 NSAIDs，會抑制血小板、增加出血風險。',
+            },
+          },
+          {
+            index: 5,
+            text: '每天固定時間量體溫、紀錄尿量與症狀變化（特別是退燒後 24–48 小時最危險）。',
+          },
+        ],
+      },
+      {
+        key: 'mosquito_prevention',
+        label: '居家防蚊（避免再傳給家人）',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: [
+          '發病前 1 天至發病後 5 天為傳染期，睡覺與休息一定要用蚊帳。',
+          '家中加裝、維護紗窗紗門，門窗無破洞。',
+          '室內可搭配捕蚊燈或經核可殺蟲劑。',
+          '個人防蚊液選擇政府核可成分（DEET、Picaridin）：成人 DEET ≤50%；回室內後以清水肥皂洗去塗抹部位。',
+          '減少病人於戶外或蚊蟲多處停留。',
+        ],
+      },
+      {
+        key: 'community_prevention',
+        label: '巡 / 倒 / 清 / 刷（孳生源清除）',
+        layout: 'comparison',
+        collapsedByDefault: true,
+        displayHint: 'expanded',
+        content: [
+          {
+            label: '巡',
+            bullets: [
+              '每週至少一次巡視家中與周邊',
+              '陽台、屋頂、庭院、水塔、花盆底盤',
+              '廢輪胎、舊傢俱、帆布、遮雨棚凹處是否積水',
+            ],
+          },
+          {
+            label: '倒',
+            bullets: [
+              '積水容器水完全倒掉',
+              '花瓶、儲水桶、寵物水盆、回收瓶罐',
+              '避免水放置超過 7 天',
+            ],
+          },
+          {
+            label: '清',
+            bullets: [
+              '清理容器內壁附著的蚊卵與污泥',
+              '不再使用的容器加蓋或倒置',
+            ],
+          },
+          {
+            label: '刷',
+            bullets: [
+              '水溝、排水管刷洗保持通暢',
+              '必要時依政府規定使用殺孑孓藥劑',
+            ],
+          },
+        ],
+      },
+      {
+        key: 'misconception',
+        label: '常見誤解',
+        layout: 'bullet',
+        collapsedByDefault: true,
+        displayHint: 'expanded',
+        content: [
+          '「退燒就代表好了」— 退燒後 24–48 小時反而是重症最高風險期。',
+          '「發燒可以吃 ibuprofen / 普拿疼以外的止痛藥」— 禁用 aspirin / NSAIDs，會增加出血。',
+          '「在家自己悶汗一下就好」— 出現警示徵象（腹痛、嘔吐、出血、意識變化）一定要急診。',
+          '「只要不被叮就不會傳給家人」— 病人本身可被家中蚊子叮後再傳給家人，所以一定要蚊帳。',
+        ],
+      },
+    ],
+    quickActions: [{ type: 'copy_text', label: '複製 30 秒口語版' }],
+    references: [
+      {
+        citation: '衛福部疾管署 — 登革熱專區',
+        sourceType: 'guideline',
+        url: 'https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw',
+        sourceLang: 'zh-TW',
+      },
+      {
+        citation: '衛福部國健署 — 防蚊液使用建議',
+        sourceType: 'guideline',
+        sourceLang: 'zh-TW',
+      },
+    ],
+    review: {
+      version: '1.0.0',
+      authoredBy: ['seed'],
+      reviewedBy: [],
+      nextReviewDue: '2027-05-26',
+      approvalScopes: ['clinical_accuracy', 'safety_disclaimer', 'language'],
+    },
+    status: 'published',
+    createdAt: '2026-05-26T00:00:00Z',
+    updatedAt: '2026-05-26T00:00:00Z',
+    searchKeywords: ['登革熱', '斷骨熱', 'dengue', '病媒蚊', '埃及斑蚊', '白線斑蚊', '巡倒清刷'],
+
+    topic: '登革熱',
+    targetPatient: ['adult', 'elderly', 'caregiver'],
+    readingLevel: 'low',
+    keyMessages: [
+      '登革熱由病媒蚊傳染，多為自限性，但退燒後 24–48 小時最危險，要密切觀察。',
+      '居家以休息、少量多次補水電解質、清淡飲食為主。',
+      '退燒止痛只能用普拿疼（acetaminophen），禁用 aspirin / NSAIDs。',
+      '發病期間務必使用蚊帳，並做好家中紗窗 / 防蚊液 / 倒積水，避免傳給家人。',
+      '出現持續腹痛、反覆嘔吐、出血、四肢冰冷、意識改變 → 立刻急診。',
+    ],
+    explainIn30s:
+      '登革熱是被斑蚊叮咬傳染的，會發高燒、頭痛、後眼窩痛、全身骨頭關節痠痛。大多可以在家照顧，重點是多休息、少量多次補水電解質、清淡飲食，退燒止痛只能用普拿疼，千萬不要吃阿斯匹靈或一般的止痛藥（NSAIDs），會增加出血風險。最危險的是退燒之後的 1–2 天，如果出現持續肚子痛、一直吐、流鼻血或牙齦出血、皮膚瘀青、手腳冰冷、嗜睡或意識怪怪的，請立刻到急診。發病期間請睡蚊帳、家裡裝好紗窗，避免被叮再傳給家人。',
+    teachBackQuestions: [
+      '什麼藥可以退燒止痛？什麼藥不可以？為什麼？',
+      '退燒後的哪段時間最危險？要觀察哪些症狀？',
+      '為什麼發病期間要睡蚊帳？',
+      '什麼情況下一定要立刻到急診？',
+      '每週巡查家中積水的口訣是什麼？',
+    ],
+    commonMisconceptions: [
+      '退燒就代表好了（其實退燒後 24–48 小時最危險）',
+      '吃 ibuprofen 沒關係（禁用，會增加出血）',
+      '在家悶汗一下就會好（出現警示徵象要急診）',
+      '不被叮就不會傳給家人（家裡的蚊子叮病人後可再傳，所以要蚊帳）',
+    ],
+    doAndDont: {
+      do: [
+        '多休息、臥床',
+        '少量多次補水電解質',
+        '只用普拿疼退燒止痛',
+        '每天量體溫紀錄尿量',
+        '睡覺用蚊帳、家中裝紗窗',
+        '每週巡倒清刷積水容器',
+      ],
+      dont: [
+        '吃 aspirin / NSAIDs（ibuprofen 等）',
+        '劇烈活動或碰撞（出血風險）',
+        '退燒就掉以輕心',
+        '意識不清還灌水',
+        '家中放積水容器超過 7 天',
+      ],
+    },
+  },
 ];
