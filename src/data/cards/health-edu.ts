@@ -679,4 +679,285 @@ export const HEALTH_EDU_CARDS: HealthEduCard[] = [
       ],
     },
   },
+
+  {
+    id: 'edu-005',
+    type: 'health_edu',
+    slug: 'three-highs-education',
+    locale: 'zh-TW',
+    title: '三高衛教',
+    subtitle: '高血壓 / 高血糖 / 高血脂整合性自我管理',
+    aliases: ['三高', '三高管理', 'three highs', 'HTN HLD DM'],
+    shortSummary:
+      '三高（高血壓、高血糖、高血脂）為心血管、中風、腎病變主要危險因子，多無症狀但長期傷血管。重點：定期量測、規律服藥、三少一多飲食、每週 150 分鐘運動。',
+    targetUser: ['nursing_student'],
+    clinicalSetting: ['opd', 'community', 'home'],
+    ageScope: ['adult', 'elderly'],
+    priority: 'normal',
+    tags: ['衛教', '慢性病', 'cardiovascular', 'metabolic'],
+    categories: ['衛教/慢性病/三高'],
+    caution: [
+      {
+        level: 'warning',
+        message: '進行衛教前請先與帶教老師或醫療團隊確認本案個別目標數值與用藥內容。',
+      },
+      {
+        level: 'warning',
+        message:
+          '三高多無症狀，「沒不舒服」不代表控制良好；切勿因感覺正常就自行停藥或減量。',
+      },
+    ],
+    redFlags: [
+      {
+        trigger: '突發嚴重頭痛、視力模糊',
+        actionHint: '懷疑高血壓急症或腦血管事件，立即就醫 / 急診。',
+      },
+      {
+        trigger: '胸痛、胸悶、冒冷汗、呼吸困難',
+        actionHint: '懷疑心肌梗塞，立即打 119。',
+      },
+      {
+        trigger: '突然單側無力、口齒不清、臉部歪斜',
+        actionHint: '中風徵象（FAST），立即打 119，把握黃金時間。',
+      },
+      {
+        trigger: '空腹血糖 >300 mg/dL 或出現意識不清、深快呼吸、水果味',
+        actionHint: '懷疑高血糖急症（DKA / HHS），立即就醫。',
+      },
+      {
+        trigger: '冒冷汗、發抖、心悸、頭暈、極度飢餓（血糖 <70 mg/dL）',
+        actionHint: '低血糖，立即吃 15g 含糖食物（糖果 / 果汁），15 分鐘後再量。',
+      },
+    ],
+    bodySections: [
+      {
+        key: 'overview',
+        label: '三高基本觀念',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: [
+          '三高 = 高血壓 + 高血糖 + 高血脂，是心血管疾病、中風、腎病變的主要危險因子。',
+          '多與高油高鹽飲食、缺乏運動、肥胖、抽菸、喝酒、壓力大相關。',
+          '通常沒有明顯症狀，要靠定期量血壓、驗血糖、驗血脂才能掌握。',
+          '長期偏高會慢慢「侵蝕」血管，等到中風 / 心肌梗塞 / 洗腎就來不及。',
+          '早期控制可大幅降低併發症風險。',
+        ],
+      },
+      {
+        key: 'diet_three_less_one_more',
+        label: '飲食「三少一多」',
+        layout: 'comparison',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: [
+          {
+            label: '少油',
+            bullets: [
+              '減少油炸、勾芡、肥肉、內臟',
+              '烹調以清蒸、川燙、滷、燉為主',
+              '選不飽和植物油（橄欖油、芥花油）',
+            ],
+          },
+          {
+            label: '少鹽',
+            bullets: [
+              '減少醃製品、加工食品、重口味醬料',
+              '泡麵 / 零食常藏大量鹽分',
+              '改用蔥、薑、蒜、洋蔥、胡椒等天然辛香料',
+            ],
+          },
+          {
+            label: '少糖',
+            bullets: [
+              '少含糖飲料、甜點、精緻點心',
+              '糖尿病更嚴格控制精緻糖與份量',
+              '避免宵夜',
+            ],
+          },
+          {
+            label: '多纖維',
+            bullets: [
+              '多吃全穀雜糧、豆類、蔬菜',
+              '水果一般成人 2–4 份 / 日',
+              '糖尿病病人 2–3 份 / 日，避免一次大量或打果汁',
+            ],
+          },
+        ],
+      },
+      {
+        key: 'exercise_weight',
+        label: '運動與體重',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: [
+          '每週至少 150 分鐘中等強度有氧運動（快走、騎車、游泳）。',
+          '分散到一週大多數天數執行，不要集中一天。',
+          '從「做得到的小改變」開始：每天多走 10–15 分鐘、改爬樓梯、晚飯後散步。',
+          '維持理想體重，減重可同時改善血壓、血脂、血糖。',
+        ],
+      },
+      {
+        key: 'three_diseases_focus',
+        label: '三高分病重點',
+        layout: 'comparison',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: [
+          {
+            label: '高血壓',
+            bullets: [
+              '定期量血壓並紀錄；量前休息 5–10 分鐘',
+              '不抽菸、不喝咖啡後立即量；手臂與心臟同高',
+              '低鹽、低油、多蔬果',
+              '不可自行停藥（即使血壓正常）',
+            ],
+          },
+          {
+            label: '高血糖',
+            bullets: [
+              '了解空腹血糖 / 飯後血糖 / 糖化血色素（HbA1c）意義',
+              '依醫囑自我監測並紀錄時間數值',
+              '定時定量、主食全穀雜糧',
+              '避免含糖飲料與宵夜',
+            ],
+          },
+          {
+            label: '高血脂',
+            bullets: [
+              '低飽和脂肪、低反式脂肪',
+              '減少肥肉、內臟、奶油、酥皮點心',
+              '多魚類、黃豆製品、不飽和植物油',
+              '減重 + 規律運動 + 戒菸是關鍵',
+            ],
+          },
+        ],
+      },
+      {
+        key: 'lifestyle',
+        label: '戒菸 / 限酒 / 作息',
+        layout: 'bullet',
+        collapsedByDefault: true,
+        displayHint: 'expanded',
+        content: [
+          '戒菸並避免二手菸，能降低心血管、腦血管、腎臟疾病風險。',
+          '酒精會影響血壓與血糖控制，建議避免或嚴格限制。',
+          '規律作息、充足睡眠，避免熬夜。',
+          '學習壓力調適：深呼吸、散步、聽音樂、與家人聊天。',
+        ],
+      },
+      {
+        key: 'medication_warning',
+        label: '用藥重點',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: [
+          '依醫囑規則服藥，不自行停藥、減藥或與他人換藥。',
+          '血壓 / 血糖看似正常時也要繼續服藥，是「藥在控制」不是「不需要藥」。',
+          '出現頭暈、胃不適等副作用回診討論，不要自行停藥。',
+          '回診時把藥帶回、或拍藥袋 / 藥單照片給醫師檢視。',
+          '與家人共同參與衛教，在家落實飲食與運動。',
+        ],
+      },
+      {
+        key: 'warning_signs',
+        label: '警訊症狀（立刻就醫）',
+        layout: 'bullet',
+        collapsedByDefault: false,
+        displayHint: 'front',
+        content: [
+          '突然嚴重頭痛、視力模糊',
+          '胸痛、胸悶、冒冷汗、呼吸困難',
+          '突然單側無力、口齒不清、臉部歪斜（中風 FAST）',
+          '意識不清、深快呼吸、呼吸有水果味（高血糖急症）',
+          '冒冷汗、發抖、心悸、極度飢餓（低血糖 → 立刻吃糖）',
+        ],
+      },
+      {
+        key: 'misconception',
+        label: '常見誤解',
+        layout: 'bullet',
+        collapsedByDefault: true,
+        displayHint: 'expanded',
+        content: [
+          '「沒不舒服就沒問題」— 三高多無症狀，要靠數值追蹤。',
+          '「血壓 / 血糖正常就可以停藥」— 是藥物在控制，停藥會反彈。',
+          '「水果是健康的，多吃沒關係」— 糖尿病要控制份量，避免打果汁。',
+          '「血脂高才需要忌口」— 血脂正常的人也要避免高油高糖。',
+          '「年輕沒症狀不用管」— 提早控制可預防中年後的併發症。',
+        ],
+      },
+    ],
+    quickActions: [{ type: 'copy_text', label: '複製 30 秒口語版' }],
+    references: [
+      {
+        citation: '衛福部國健署 — 三高防治衛教',
+        sourceType: 'guideline',
+        sourceLang: 'zh-TW',
+      },
+      {
+        citation: '一般病人衛教手冊（範例條目）',
+        sourceType: 'institutional_sop',
+        sourceLang: 'zh-TW',
+      },
+    ],
+    review: {
+      version: '1.0.0',
+      authoredBy: ['seed'],
+      reviewedBy: [],
+      nextReviewDue: '2027-05-26',
+      approvalScopes: ['clinical_accuracy', 'language'],
+    },
+    status: 'published',
+    createdAt: '2026-05-26T00:00:00Z',
+    updatedAt: '2026-05-26T00:00:00Z',
+    searchKeywords: ['三高', '高血壓', '高血糖', '高血脂', '糖尿病', '代謝症候群', '三少一多'],
+
+    topic: '三高',
+    targetPatient: ['adult', 'elderly', 'caregiver'],
+    readingLevel: 'low',
+    keyMessages: [
+      '三高多無症狀，但長期傷血管，要靠定期量測掌握。',
+      '飲食口訣：三少一多（少油、少鹽、少糖、多纖維）。',
+      '每週至少 150 分鐘中等強度運動，從小改變開始。',
+      '依醫囑規律服藥，數值正常也不自行停藥。',
+      '出現中風、心痛、嚴重頭痛、意識變化 → 立即急診。',
+    ],
+    explainIn30s:
+      '三高就是高血壓、高血糖、高血脂，平常沒感覺，但血管會慢慢被侵蝕，幾年後容易中風、心肌梗塞或洗腎。日常照顧記得「三少一多」：少油少鹽少糖多纖維，每週至少 150 分鐘運動，從每天多走 15 分鐘開始也可以。藥要規律吃，就算量起來正常也不要自己停，因為是藥物在幫你控制。如果出現嚴重頭痛、胸痛、突然口齒不清或單側無力、意識變化，請立刻送急診。以上是一般原則，您的醫師會依您個別狀況調整目標和用藥。',
+    teachBackQuestions: [
+      '飲食「三少一多」是哪四個重點？',
+      '為什麼血壓 / 血糖正常時還要繼續吃藥？',
+      '每週運動目標時間是多少？可以怎麼分配？',
+      '出現哪些症狀需要立刻送急診？',
+      '低血糖時應該先做什麼處理？',
+    ],
+    commonMisconceptions: [
+      '沒不舒服就代表控制良好',
+      '數值正常就可以停藥',
+      '水果是健康的可以多吃（糖尿病要控制份量）',
+      '只有血脂高才需要忌口',
+      '年輕沒症狀不用管',
+    ],
+    doAndDont: {
+      do: [
+        '定期量血壓 / 血糖並紀錄',
+        '三少一多飲食',
+        '每週 ≥150 分鐘運動',
+        '規律服藥',
+        '戒菸、限酒、規律睡眠',
+        '家人共同參與支持',
+      ],
+      dont: [
+        '自行停藥或減藥',
+        '油炸 / 重口味 / 加工食品',
+        '含糖飲料、宵夜',
+        '一次吃大量水果或喝果汁',
+        '熬夜、過量飲酒',
+      ],
+    },
+    relatedDiseaseIds: ['dis-001'],
+  },
 ];
